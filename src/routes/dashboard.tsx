@@ -81,9 +81,14 @@ function Dashboard() {
 
   const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
+  const chartSummary = useMemo(() => {
+    if (top.length === 0) return "Interest chart: no topic weights yet.";
+    const parts = top.map(([tag, value]) => `${TAG_LABEL[tag] ?? tag} ${formatInterest(value)}`);
+    return `Interest chart. Strongest topics: ${parts.join(", ")}.`;
+  }, [top]);
+
   return (
     <>
-    <p className="sr-only">{chartSummary}</p>
     <main id="main-content" className="grain min-h-dvh">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 lg:py-12">
         <header className="flex flex-wrap items-end justify-between gap-4">
