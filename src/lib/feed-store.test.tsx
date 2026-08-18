@@ -9,7 +9,16 @@ vi.mock("@/hooks/useAuth", () => ({
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     from: () => ({
-      select: () => ({ order: () => Promise.resolve({ data: null, error: null }) }),
+      select: () => {
+        const result = Promise.resolve({ data: null, error: null });
+        const chain: Record<string, unknown> = {
+          eq: () => chain,
+          order: () => result,
+          limit: () => result,
+          then: result.then.bind(result),
+        };
+        return chain;
+      },
       delete: () => ({ eq: () => Promise.resolve({ error: null }) }),
       insert: () => Promise.resolve({ error: null }),
     }),
