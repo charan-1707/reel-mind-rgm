@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# AI Score Evolution
+
+This was the project Which I have build with lovalble last time and now I need to add some requirements so that the score analyzed by the ai is more so the ai evolution is like this so what you need to do is that go through the project and understand the project first and then start making changes and make sure the changes won't break any other things.
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://reel-mind-rgm.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/34e45f9b-153a-4c46-abf5-6adc785e3cdc).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
