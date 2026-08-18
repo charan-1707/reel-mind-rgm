@@ -98,7 +98,7 @@ export function FeedProvider({ children }: { children: ReactNode }) {
           .from("interactions")
           .select("id,reel_id,action,created_at")
           .order("created_at", { ascending: true })
-          .limit(500),
+          .limit(MAX_INTERACTIONS),
         supabase
           .from("queue_items")
           .select("reel_id,created_at")
@@ -131,7 +131,7 @@ export function FeedProvider({ children }: { children: ReactNode }) {
         at: Date.now(),
       };
       setInteractions((prev) => {
-        const next = [...prev, entry].slice(-500);
+        const next = [...prev, entry].slice(-MAX_INTERACTIONS);
         if (!user) writeGuest({ interactions: next, queue });
         return next;
       });
