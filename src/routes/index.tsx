@@ -102,8 +102,8 @@ function Home() {
 
   if (!reel) {
     return (
-      <main className="grain grid min-h-[60vh] place-items-center px-4">
-        <p className="text-sm text-muted-foreground">
+      <main id="main-content" className="grain grid min-h-[60vh] place-items-center px-4">
+        <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
           {loading ? "Loading your feed…" : "No reels published yet."}
         </p>
       </main>
@@ -111,7 +111,7 @@ function Home() {
   }
 
   return (
-    <main className="grain min-h-screen">
+    <main id="main-content" className="grain min-h-dvh">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:py-12">
         <section className="space-y-4">
           <h1 className="sr-only">Your AI tech reels feed</h1>

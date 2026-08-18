@@ -82,7 +82,7 @@ function Dashboard() {
   const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
   return (
-    <main className="grain min-h-screen">
+    <main id="main-content" className="grain min-h-dvh">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 lg:py-12">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -93,14 +93,15 @@ function Dashboard() {
             </p>
           </div>
           <button
+            aria-label="Reset your interest profile and clear all signals"
             onClick={resetProfile}
             className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <RotateCcw className="size-3.5" /> Reset profile
+            <RotateCcw className="size-3.5" aria-hidden="true" /> Reset profile
           </button>
         </header>
 
-        <section className="grid gap-4 sm:grid-cols-4">
+        <section aria-label="Profile summary" className="grid gap-4 sm:grid-cols-4">
           {[
             ["Reels watched", seenCount],
             ["Signals sent", interactions.length],
