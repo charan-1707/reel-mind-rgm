@@ -149,13 +149,20 @@ function AuthNav() {
 
 function SiteHeader() {
   return (
+    <>
+    <a
+      href="#main-content"
+      className="sr-only rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60]"
+    >
+      Skip to main content
+    </a>
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5">
-        <Link to="/" className="flex items-baseline gap-2">
+        <Link to="/" aria-label="Reelmind home" className="flex items-baseline gap-2">
           <span className="font-display text-lg font-bold tracking-tight">reelmind</span>
           <span className="label hidden sm:inline">ai tech feed</span>
         </Link>
-        <nav className="flex items-center gap-1 text-sm">
+        <nav aria-label="Main" className="flex items-center gap-1 text-sm">
           <Link
             to="/"
             activeOptions={{ exact: true }}
@@ -182,6 +189,7 @@ function SiteHeader() {
         </nav>
       </div>
     </header>
+    </>
   );
 }
 
