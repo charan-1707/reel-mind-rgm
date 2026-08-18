@@ -122,3 +122,24 @@
 @utility poster-drift {
   animation: drift 14s ease-in-out infinite alternate;
 }
+
+/* Respect the OS "reduce motion" setting: drop drifting posters, spinners
+   and transitions so vestibular-sensitive users get a static interface. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Always-visible keyboard focus ring, even on custom controls. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}

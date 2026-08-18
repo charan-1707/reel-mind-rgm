@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { RotateCcw } from "lucide-react";
 import { TAG_LABEL } from "@/lib/reels";
+import { formatInterest } from "@/lib/format";
 import { useFeed } from "@/lib/feed-store";
 import {
   ACTION_LABEL,
