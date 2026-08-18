@@ -4,6 +4,7 @@ import { Check, PlayCircle, Search } from "lucide-react";
 import { toast } from "sonner";
 import { TAG_LABEL } from "@/lib/reels";
 import { rankReels } from "@/lib/scoring";
+import { availableTags, filterReels } from "@/lib/search";
 import { useFeed } from "@/lib/feed-store";
 import { Poster } from "@/components/Poster";
 
@@ -32,27 +33,15 @@ function Explore() {
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<string | null>(null);
 
-  const tags = useMemo(
-    () => [...new Set(reels.flatMap((r) => r.tags))].sort(),
-    [reels],
+  const tags = useMemo(() => availableTags(reels), [reels]);
+
+  const results = useMemo(
+    () => rankReels({ reels: filterReels({ reels, query, tag }), interactions }),
+    [reels, interactions, query, tag],
   );
 
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const filtered = reels.filter((r) => {
-      const matchesTag = !tag || r.tags.includes(tag);
-      const matchesQuery =
-        !q ||
-        r.title.toLowerCase().includes(q) ||
-        r.summary.toLowerCase().includes(q) ||
-        r.creator.toLowerCase().includes(q);
-      return matchesTag && matchesQuery;
-    });
-    return rankReels({ reels: filtered, interactions });
-  }, [reels, interactions, query, tag]);
-
   return (
-    <main className="grain min-h-screen">
+    <main id="main-content" className="grain min-h-dvh">
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 lg:py-12">
         <header>
           <h1 className="font-display text-3xl font-semibold">Explore the catalogue</h1>
@@ -76,10 +65,12 @@ function Explore() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search titles, creators or topics"
+              aria-describedby="reel-search-count"
               className="w-full rounded-full border border-input bg-background py-2.5 pl-9 pr-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
           <div className="flex flex-wrap gap-2">
+            <h2 className="sr-only">Filter by topic</h2>
             <button
               onClick={() => setTag(null)}
               aria-pressed={tag === null}
@@ -108,6 +99,10 @@ function Explore() {
           </div>
         </div>
 
+        <p id="reel-search-count" aria-live="polite" className="sr-only">
+          {results.length} {results.length === 1 ? "reel" : "reels"} match your search.
+        </p>
+
         {results.length === 0 ? (
           <p className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
             No reels match that search yet.
@@ -134,12 +129,19 @@ function Explore() {
                     </p>
                     <div className="mt-auto flex items-center gap-2 pt-2">
                       <button
+                        aria-label={`Watch ${reel.title}`}
                         onClick={() => navigate({ to: "/", search: { reel: reel.id } })}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                        className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
                       >
                         <PlayCircle className="size-3.5" aria-hidden="true" /> Watch this
                       </button>
                       <button
+                        aria-label={
+                          queued
+                            ? `Remove ${reel.title} from your queue`
+                            : `Add ${reel.title} to your queue`
+                        }
+                        aria-pressed={queued}
                         onClick={() => {
                           if (queued) {
                             dequeue(reel.id);
@@ -149,7 +151,7 @@ function Explore() {
                             toast("Added to your queue");
                           }
                         }}
-                        className="rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                        className="min-h-9 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {queued ? (
                           <span className="inline-flex items-center gap-1">
