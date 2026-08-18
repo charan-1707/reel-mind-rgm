@@ -11,30 +11,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { REELS, type Reel } from "./reels";
 import type { Action, Interaction } from "./scoring";
+import { readGuestState, writeGuestState } from "./guest-storage";
 
-const GUEST_KEY = "reelmind.guest.v2";
+const readGuest = readGuestState;
+const writeGuest = writeGuestState;
 
-type GuestState = { interactions: Interaction[]; queue: string[] };
-
-function readGuest(): GuestState {
-  if (typeof window === "undefined") return { interactions: [], queue: [] };
-  try {
-    const raw = window.localStorage.getItem(GUEST_KEY);
-    if (!raw) return { interactions: [], queue: [] };
-    const parsed = JSON.parse(raw) as Partial<GuestState>;
-    return { interactions: parsed.interactions ?? [], queue: parsed.queue ?? [] };
-  } catch {
-    return { interactions: [], queue: [] };
-  }
-}
-
-function writeGuest(state: GuestState) {
-  try {
-    window.localStorage.setItem(GUEST_KEY, JSON.stringify(state));
-  } catch {
-    /* storage unavailable — stay in memory */
-  }
-}
+/** Newest interactions kept per profile; older signals are dropped. */
+const MAX_INTERACTIONS = 500;
 
 type FeedValue = {
   reels: Reel[];
