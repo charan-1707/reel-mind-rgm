@@ -100,7 +100,7 @@ function AuthPage() {
   };
 
   return (
-    <main className="grain flex min-h-[calc(100vh-57px)] items-center justify-center px-4 py-12">
+    <main id="main-content" className="grain flex min-h-[calc(100dvh-57px)] items-center justify-center px-4 py-12">
       <div className="w-full max-w-md rounded-xl border border-border bg-card p-6 sm:p-8">
         <h1 className="font-display text-2xl font-semibold">
           {mode === "signin" ? "Sign in to Reelmind" : "Create your Reelmind account"}

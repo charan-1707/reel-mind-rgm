@@ -82,6 +82,8 @@ function Dashboard() {
   const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 
   return (
+    <>
+    <p className="sr-only">{chartSummary}</p>
     <main id="main-content" className="grain min-h-dvh">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 lg:py-12">
         <header className="flex flex-wrap items-end justify-between gap-4">
@@ -120,7 +122,7 @@ function Dashboard() {
           <p className="mt-1 text-sm text-muted-foreground">
             Weight per topic across your last {series.length} interactions.
           </p>
-          <div className="mt-6 h-72">
+          <div className="mt-6 h-72" role="img" aria-label={chartSummary}>
             {loading ? (
               <div className="grid h-full place-items-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
                 Loading your profile…
@@ -234,5 +236,6 @@ function Dashboard() {
         </section>
       </div>
     </main>
+    </>
   );
 }
