@@ -143,7 +143,7 @@ export function ReelPlayer({
               onClick={() => setPlaying((p) => !p)}
               className="grid size-11 place-items-center rounded-full border border-border bg-surface/80 backdrop-blur transition-colors hover:border-primary"
             >
-              {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
+              {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
             </button>
             <button
               aria-label="Like this reel"
@@ -158,14 +158,15 @@ export function ReelPlayer({
                   : "border-border bg-surface/80 hover:border-primary"
               }`}
             >
-              <Heart className={`size-4 ${liked ? "fill-current" : ""}`} />
+              <Heart aria-hidden="true"
+                className={`size-4 ${liked ? "fill-current" : ""}`} />
             </button>
             <button
               aria-label="Skip to next reel"
               onClick={onSkip}
               className="grid size-11 place-items-center rounded-full border border-border bg-surface/80 backdrop-blur transition-colors hover:border-primary"
             >
-              <SkipForward className="size-4" />
+              <SkipForward className="size-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -174,12 +175,12 @@ export function ReelPlayer({
       <button
         aria-label="Previous reel"
         onClick={onPrev}
-        className="absolute right-4 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-border/60 bg-surface/50 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
+        className="absolute right-4 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-border/60 bg-surface/50 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
       >
-        <ChevronUp className="size-4" />
+        <ChevronUp className="size-4" aria-hidden="true" />
       </button>
       <span className="absolute right-4 top-12 hidden items-center gap-1 text-xs text-muted-foreground sm:flex">
-        <Volume2 className="size-3.5" /> ambient
+        <Volume2 className="size-3.5" aria-hidden="true" /> ambient
       </span>
     </section>
   );
